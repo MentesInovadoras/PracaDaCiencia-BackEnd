@@ -26,13 +26,14 @@ SECRET_KEY = 'django-insecure-ce8+6$=&zjrgx4^bkijwxypma4827l$(_9dqew9v7--o8enxaj
 
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,9 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'PracaDaCiencia',
+    'apps.administrador'
+    'apps.visitantes'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -167,5 +171,18 @@ TEMPLATES = [
     },
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5500",  # React, Vue, or Angular app running locally
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 DEBUG = True
 TEMPLATES[0]['OPTIONS']['debug'] = True

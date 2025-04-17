@@ -15,14 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.shortcuts import redirect
 from rest_framework.response import Response
-from .views import CriarTecnico, filtrar_tecnicos
-from .models import Tecnico
+from rest_framework import routers
+from .viewsets import TecnicoViewset, VisitaViewset, RoteiroViewset, UnidadeDeEnsinoViewset, GuiasViewset, MunicipioViewset
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -37,9 +37,16 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
+router = routers.DefaultRouter()
+router.register(r"tecnicos", TecnicoViewset, basename="Tecnico") #Registra o modelo Tecnico no router
+router.register(r"visitas", VisitaViewset, basename="Visita") #Registra o modelo Visita no router
+router.register(r"roteiros", RoteiroViewset, basename="Roteiro") #Registra o modelo Roteiro no router
+router.register(r"unidades", UnidadeDeEnsinoViewset, basename="UnidadeDeEnsino") #Registra o modelo UnidadeDeEnsino no router
+router.register(r"guias", GuiasViewset, basename="Guias") #Registra o modelo Guias no router
+router.register(r"municipios", MunicipioViewset, basename="Municipio") #Registra o modelo Municipio no router
+
 urlpatterns = [
-    path('Tecnicos/', CriarTecnico.as_view(), name='tecnicos-create'),  # Define a URL para criar TRécnicos
-    path('filtrar_tecnicos/', filtrar_tecnicos, name='filtrar_tecnicos'),
+    path("", include(router.urls)), #Inclui as urls do app PracaDaCiencia
     path('', lambda request: redirect('/swagger/')), #Redireciona para o Swagger
     path('admin/', admin.site.urls),
      # Rotas do Swagger (Especificações)
