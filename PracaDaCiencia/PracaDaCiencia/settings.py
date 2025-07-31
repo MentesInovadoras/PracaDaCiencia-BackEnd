@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'PracaDaCiencia',
-    'apps.administrador'
+    'apps.administrador',
     'apps.visitantes'
 ]
 
