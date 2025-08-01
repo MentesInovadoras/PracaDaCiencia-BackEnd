@@ -20,9 +20,10 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.shortcuts import redirect
-from rest_framework.response import Response
 from rest_framework import routers
-from .viewsets import TecnicoViewset, VisitaViewset, RoteiroViewset, UnidadeDeEnsinoViewset, GuiasViewset, MunicipioViewset
+
+from .viewsets import *
+from .apiviews import *
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -45,9 +46,12 @@ router.register(r"unidades", UnidadeDeEnsinoViewset, basename="UnidadeDeEnsino")
 router.register(r"guias", GuiasViewset, basename="Guias") #Registra o modelo Guias no router
 router.register(r"municipios", MunicipioViewset, basename="Municipio") #Registra o modelo Municipio no router
 
+
 urlpatterns = [
-    path("", include(router.urls)), #Inclui as urls do app PracaDaCiencia
+    path('', include(router.urls)), #Inclui as urls do app PracaDaCiencia
     path('', lambda request: redirect('/swagger/')), #Redireciona para o Swagger
+    path('dias_indisponiveis/', DiasIndisponiveis.as_view(), name='dias_indisponiveis'),
+    path('horarios_disponiveis/<str:dia>', HorariosDisponiveis.as_view(), name='horarios_disponiveis'),
     path('admin/', admin.site.urls),
      # Rotas do Swagger (Especificações)
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
