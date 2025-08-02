@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tecnico, Visita, Roteiro, UnidadeDeEnsino, Guias, Municipio
+from .models import *
 
 
 class TecnicoSerializer(serializers.ModelSerializer):
@@ -10,11 +10,6 @@ class TecnicoSerializer(serializers.ModelSerializer):
 class RoteiroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Roteiro
-        fields = '__all__'
-
-class UnidadeDeEnsinoSerializer(serializers.ModelSerializer):   
-    class Meta:
-        model = UnidadeDeEnsino
         fields = '__all__'
 
 class GuiasSerializer(serializers.ModelSerializer):
@@ -42,3 +37,5 @@ class MunicipioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Municipio
         fields = '__all__'
+        
+        

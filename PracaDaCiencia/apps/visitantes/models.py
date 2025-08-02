@@ -1,7 +1,5 @@
 from django.db import models
 
-from ..administrador.models import Guias
-
 
 class Pessoa(models.Model):
     cep = models.CharField(max_length=10)
@@ -33,24 +31,4 @@ class Visitante(models.Model):
     
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, null=True, blank=True)
     instituicao = models.ForeignKey(UnidadeDeEnsino, on_delete=models.CASCADE, null=True, blank=True)
-
-
-class Visita(models.Model):
-    class VisitaTipo(models.TextChoices):
-        PessoaFisica = "Pessoa Física"
-        UnidadeDeEnsino = "Unidade de Ensino"
-    
-    class StatusVisita(models.TextChoices):
-        Agendado = "Agendado"
-        Expirado = "Expirado"
-        Cancelada = "Cancelada"
-        Realizado = "Realizado"
-
-    tipo_visita = models.CharField(choices=VisitaTipo.choices, max_length=40)
-    data_visita = models.DateField()
-    numero_visitantes = models.IntegerField()
-    
-    status = models.CharField(choices=StatusVisita.choices, max_length=50, default=StatusVisita.Agendado)
-    visitante = models.ForeignKey(Visitante, on_delete=models.CASCADE, null=False)
-    guia = models.ForeignKey(Guias, on_delete=models.PROTECT, null=True, blank=True)
 

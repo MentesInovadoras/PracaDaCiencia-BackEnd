@@ -48,10 +48,6 @@ class RoteiroViewset(viewsets.ModelViewSet):
     queryset = Roteiro.objects.all()
     serializer_class = RoteiroSerializer
 
-class UnidadeDeEnsinoViewset(viewsets.ModelViewSet):
-    queryset = UnidadeDeEnsino.objects.all()
-    serializer_class = UnidadeDeEnsinoSerializer
-
 class GuiasViewset(viewsets.ModelViewSet):
     queryset = Guias.objects.all()
     serializer_class = GuiasSerializer  
@@ -59,3 +55,5 @@ class GuiasViewset(viewsets.ModelViewSet):
 class MunicipioViewset(viewsets.ModelViewSet):
     queryset = Municipio.objects.all()
     serializer_class = MunicipioSerializer
+    
+    

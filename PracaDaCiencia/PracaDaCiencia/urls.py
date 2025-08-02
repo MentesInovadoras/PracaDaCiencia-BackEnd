@@ -22,8 +22,11 @@ from drf_yasg import openapi
 from django.shortcuts import redirect
 from rest_framework import routers
 
-from .viewsets import *
-from .apiviews import *
+from apps.administrador.viewsets import *
+from apps.administrador.apiviews import *
+from apps.visitantes.viewsets import *
+from apps.visitantes.APIView import *
+
 
 schema_view = get_schema_view(
     openapi.Info(

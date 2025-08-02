@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'drf_yasg',
-    'PracaDaCiencia',
     'apps.administrador',
     'apps.visitantes'
 ]
