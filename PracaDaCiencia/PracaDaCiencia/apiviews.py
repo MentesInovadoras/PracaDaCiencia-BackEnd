@@ -4,6 +4,9 @@ from rest_framework.response import Response
 
 from datetime import datetime, timedelta
 
+from .serializers import *
+from .models import *
+
 
 class DiasIndisponiveis(APIView):
     def get(self, request):
@@ -23,5 +26,5 @@ class DiasIndisponiveis(APIView):
 class HorariosDisponiveis(APIView):
     def get(self, request, dia: str):
         return Response([f"0{x}:00" for x in range(6, 10)], status=status.HTTP_200_OK)
-    
-    
+        
+        

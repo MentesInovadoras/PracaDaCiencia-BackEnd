@@ -7,11 +7,6 @@ class TecnicoSerializer(serializers.ModelSerializer):
         model = Tecnico
         fields = '__all__'
 
-class VisitaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Visita
-        fields = '__all__' 
-
 class RoteiroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Roteiro
@@ -26,6 +21,22 @@ class GuiasSerializer(serializers.ModelSerializer):
     class Meta:
         model = Guias
         fields = '__all__'
+
+class VisitaReadSerializer(serializers.ModelSerializer):
+    guia = GuiasSerializer(many=False)
+    class Meta:
+        model = Visita
+        fields = '__all__' 
+
+class VisitaWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Visita
+        fields = '__all__' 
+
+class VisitaSimplificadaReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Visita
+        fields = ['nome_visitante']
 
 class MunicipioSerializer(serializers.ModelSerializer):
     class Meta:

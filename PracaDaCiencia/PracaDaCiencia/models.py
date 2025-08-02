@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.db import models
-from django.utils import timezone
 from django.db.models import Value
 from django.db.models.functions import Concat
 
@@ -35,7 +33,8 @@ class Visita(models.Model):
     telefone_visitante = models.CharField(max_length=15)
     numero_visitantes = models.IntegerField()
     tipo_visita = models.CharField(choices=VisitaTipo.choices, max_length=50)
-    data_visita = models.DateField()
+    data_visita = models.DateTimeField()
+    observacao = models.CharField(max_length=255)
     status = models.CharField(choices=StatusVisita.choices, max_length=50, default=StatusVisita.Agendado)
     guia = models.ForeignKey(Guias, on_delete=models.CASCADE, null=True, blank=True)
 
