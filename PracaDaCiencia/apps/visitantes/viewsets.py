@@ -5,7 +5,12 @@ from .serializers import *
 
 
 class UnidadeDeEnsinoViewset(viewsets.ModelViewSet):
-    queryset = UnidadeDeEnsino.objects.all()
+    queryset = Visitante.objects.filter(instituicao__isnull=False)
     serializer_class = UnidadeDeEnsinoSerializer
+    
+    
+class VisitanteViewset(viewsets.ModelViewSet):
+    queryset = Visitante.objects.filter(pessoa__isnull=False)
+    serializer_class = VisitanteSerializer
     
     

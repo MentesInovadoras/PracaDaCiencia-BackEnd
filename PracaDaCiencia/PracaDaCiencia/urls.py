@@ -42,13 +42,12 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r"tecnicos", TecnicoViewset, basename="Tecnico") #Registra o modelo Tecnico no router
-router.register(r"visitas", VisitaViewset, basename="Visita") #Registra o modelo Visita no router
-router.register(r"roteiros", RoteiroViewset, basename="Roteiro") #Registra o modelo Roteiro no router
-router.register(r"unidades", UnidadeDeEnsinoViewset, basename="UnidadeDeEnsino") #Registra o modelo UnidadeDeEnsino no router
-router.register(r"guias", GuiasViewset, basename="Guias") #Registra o modelo Guias no router
-router.register(r"municipios", MunicipioViewset, basename="Municipio") #Registra o modelo Municipio no router
-
+router.register(r"tecnicos", TecnicoViewset, basename="Tecnico") 
+router.register(r"visitas", VisitaViewset, basename="Visita")
+router.register(r"roteiros", RoteiroViewset, basename="Roteiro") 
+router.register(r"guias", GuiasViewset, basename="Guias")
+router.register(r"visitantes_unidade", UnidadeDeEnsinoViewset, basename="VisitanteUnidadeDeEnsino")
+router.register(r"visitantes_pessoas", VisitanteViewset, basename="VisitantePessoa")
 
 urlpatterns = [
     path('', include(router.urls)), #Inclui as urls do app PracaDaCiencia

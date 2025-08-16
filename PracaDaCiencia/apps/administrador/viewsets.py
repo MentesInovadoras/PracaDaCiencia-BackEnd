@@ -52,8 +52,3 @@ class GuiasViewset(viewsets.ModelViewSet):
     queryset = Guias.objects.all()
     serializer_class = GuiasSerializer  
 
-class MunicipioViewset(viewsets.ModelViewSet):
-    queryset = Municipio.objects.all()
-    serializer_class = MunicipioSerializer
-    
-    

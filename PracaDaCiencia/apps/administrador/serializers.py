@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import *
 
+from apps.visitantes.serializers import *
+
 
 class TecnicoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,10 +21,23 @@ class GuiasSerializer(serializers.ModelSerializer):
 
 class VisitaReadSerializer(serializers.ModelSerializer):
     guia = GuiasSerializer(many=False)
+    roteiro = RoteiroSerializer(many=False)
+    visitante = serializers.SerializerMethodField()
+    tipo_visitante = serializers.SerializerMethodField()
+    
     class Meta:
         model = Visita
         fields = '__all__' 
 
+    def get_visitante(self, obj: Visita):
+        match (obj.visitante.visitante_tipo()):
+            case Visitante.TipoVisitante.UnidadeDeEnsino:
+                return UnidadeDeEnsinoSerializer(obj.visitante).data
+            case Visitante.TipoVisitante.PessoaFisica:
+                return VisitanteSerializer(obj.visitante).data
+    def get_tipo_visitante(self, obj: Visita):
+        return obj.visitante.visitante_tipo()
+    
 class VisitaWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visita
@@ -33,9 +48,3 @@ class VisitaSimplificadaReadSerializer(serializers.ModelSerializer):
         model = Visita
         fields = ['nome_visitante']
 
-class MunicipioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Municipio
-        fields = '__all__'
-        
-        
