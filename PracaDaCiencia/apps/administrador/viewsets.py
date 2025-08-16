@@ -10,6 +10,8 @@ from drf_yasg.utils import swagger_auto_schema
 from .models import *
 from .serializers import *
 
+from django.utils import timezone
+
 
 class TecnicoViewset(viewsets.ModelViewSet):
     queryset = Tecnico.objects.all()
@@ -18,8 +20,8 @@ class TecnicoViewset(viewsets.ModelViewSet):
 class VisitaViewset(viewsets.ModelViewSet):
     queryset = Visita.objects.all()
     
-    def get_serializer_class(self) -> type[Serializer]:
-        if(self.request.method == "GET"):
+    def get_serializer_class(self):
+        if self.request.method == "GET":
             return VisitaReadSerializer
         return VisitaWriteSerializer
     
@@ -28,7 +30,7 @@ class VisitaViewset(viewsets.ModelViewSet):
         manual_parameters=[
             openapi.Parameter(
                 name='dia',
-                in_=openapi.IN_PATH,
+                in_=openapi.IN_QUERY,
                 description='Data no formato AAAA-MM-DD',
                 type=openapi.TYPE_STRING,
                 pattern=r'\d{4}-\d{2}-\d{2}',
@@ -37,23 +39,30 @@ class VisitaViewset(viewsets.ModelViewSet):
         ],
         responses={200: VisitaReadSerializer(many=True)}
     )
-    @action(methods=['GET'], detail=False, url_path=r"<str:dia>")
+    @action(methods=['GET'], detail=False, url_path='visitas_especificas')
     def visitas_especificas(self, request):
-        object_filtrado = Visita.objects.filter(data_visita__date=request.query_params.get('dia'))
-        serializer = VisitaReadSerializer(many=True, data=object_filtrado)
-        
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        dia = request.query_params.get('dia')
+        if not dia:
+            return Response({"erro": "Parâmetro 'dia' obrigatório."}, status=status.HTTP_400_BAD_REQUEST)
 
-class RoteiroViewset(viewsets.ModelViewSet):
-    queryset = Roteiro.objects.all()
-    serializer_class = RoteiroSerializer
+        visitas = Visita.objects.filter(visitante__data_visita__date=dia)
+        serializer = VisitaReadSerializer(visitas, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class GuiasViewset(viewsets.ModelViewSet):
     queryset = Guias.objects.all()
-    serializer_class = GuiasSerializer  
+    serializer_class = GuiasSerializer
 
-class MunicipioViewset(viewsets.ModelViewSet):
-    queryset = Municipio.objects.all()
-    serializer_class = MunicipioSerializer
-    
-    
+
+class VisitanteViewsetToday(viewsets.ModelViewSet):
+    queryset = Visitante.objects.all()
+    serializer_class = VisitanteReadSerializer
+
+    @action(detail=False)
+    def hoje(self, request):
+        hoje = timezone.now().date()
+        visitantes_hoje = Visitante.objects.filter(data_visita__date=hoje)
+        visitantes_hoje = visitantes_hoje.order_by('data_visita')
+        serializers = self.get_serializer(visitantes_hoje, many=True)
+
+        return Response(serializers.data)

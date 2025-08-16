@@ -47,7 +47,7 @@ router.register(r"visitas", VisitaViewset, basename="Visita") #Registra o modelo
 router.register(r"roteiros", RoteiroViewset, basename="Roteiro") #Registra o modelo Roteiro no router
 router.register(r"unidades", UnidadeDeEnsinoViewset, basename="UnidadeDeEnsino") #Registra o modelo UnidadeDeEnsino no router
 router.register(r"guias", GuiasViewset, basename="Guias") #Registra o modelo Guias no router
-router.register(r"municipios", MunicipioViewset, basename="Municipio") #Registra o modelo Municipio no router
+router.register(r"visitante", VisitanteViewset, basename="Visitante")
 
 
 urlpatterns = [

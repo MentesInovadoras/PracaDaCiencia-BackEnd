@@ -1,0 +1,8 @@
+find . -type d -name "__pycache__" -exec rm -rf {} +
+find . -type d -name "migrations" -exec rm -rf {} +
+python manage.py makemigrations administrador
+python manage.py makemigrations visitantes
+python manage.py makemigrations
+python manage.py migrate
+
+
