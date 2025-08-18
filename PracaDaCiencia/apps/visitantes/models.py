@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-
 """
 Aqui ficará todos os dados que são da 
 competência do visitante decidir em primeiro caso.
